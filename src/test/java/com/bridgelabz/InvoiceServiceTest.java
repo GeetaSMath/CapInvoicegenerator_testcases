@@ -9,7 +9,7 @@ public class InvoiceServiceTest {
         InvoiceService invoiceService = new InvoiceService();
         double distance = 2.0;
         int time = 5;
-        double totalFare = invoiceService.CalculateFare(distance, time);
+        double totalFare = invoiceService.calculateFare(distance, time);
         Assertions.assertEquals(25, totalFare, 0);
     }
 
@@ -18,7 +18,7 @@ public class InvoiceServiceTest {
         InvoiceService invoiceService = new InvoiceService();
         double distance = 0.1;
         int time = 1;
-        double totalFare = invoiceService.CalculateFare(distance, time);
+        double totalFare = invoiceService.calculateFare(distance, time);
         Assertions.assertEquals(5.0, totalFare, 0);
     }
 
@@ -30,7 +30,19 @@ public class InvoiceServiceTest {
                 new Ride(20, 60)
         };
         InvoiceService invoiceService = new InvoiceService();
-        double totalFare = invoiceService.calculateFare(rides);
-        Assert.assertEquals(260, totalFare, 0);
+        double totalFare = invoiceService.calculateTotalFare(rides);
+        Assertions.assertEquals(260, totalFare, 0);
     }
+
+    @Test
+    public void givenMultipleRides_ShouldReturnInvoiceSummary() {
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(0.1, 1),
+        };
+        InvoiceService invoiceService = new InvoiceService();
+        InvoiceSummary invoiceSummary = invoiceService.calculateFare(rides);
+        InvoiceSummary expectedInvoices = new InvoiceSummary(2, 30.0);
+        Assertions.assertEquals(expectedInvoices.getInvoiceSummary(), invoiceSummary.getInvoiceSummary());
+    }
+
 }
