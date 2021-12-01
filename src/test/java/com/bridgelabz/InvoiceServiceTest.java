@@ -10,7 +10,7 @@ public class InvoiceServiceTest {
         double distance = 2.0;
         int time = 5;
         double totalFare = invoiceService.CalculateFare(distance, time);
-        Assertions.assertEquals(25, totalFare,0);
+        Assertions.assertEquals(25, totalFare, 0);
     }
 
     @Test
@@ -19,6 +19,18 @@ public class InvoiceServiceTest {
         double distance = 0.1;
         int time = 1;
         double totalFare = invoiceService.CalculateFare(distance, time);
-        Assertions.assertEquals(5.0, totalFare,0);
+        Assertions.assertEquals(5.0, totalFare, 0);
+    }
+
+    @Test
+    public void givenMultipleRides_ShouldReturnTotalOfTotalFare() {
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(5.0, 10),
+                new Ride(0.1, 1),
+                new Ride(20, 60)
+        };
+        InvoiceService invoiceService = new InvoiceService();
+        double totalFare = invoiceService.calculateFare(rides);
+        Assert.assertEquals(260, totalFare, 0);
     }
 }
